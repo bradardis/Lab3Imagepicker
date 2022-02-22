@@ -2,11 +2,12 @@ package edu.temple.imagepicker
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), RecyclerAdapter.OnItemClickListener {
 
     private var layoutManager: RecyclerView.LayoutManager? = null
 
@@ -23,9 +24,13 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.layoutManager = layoutManager
 
-        adapter = RecyclerAdapter()
+        adapter = RecyclerAdapter(this)
 
         recyclerView.adapter = adapter
 
+    }
+
+    override fun onItemClick(imageView: ImageView) {
+        displayImage.setImageResource(imageView.imageAlpha)
     }
 }

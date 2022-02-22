@@ -2,11 +2,12 @@ package edu.temple.imagepicker
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(){
+class RecyclerAdapter( private val listener: OnItemClickListener): RecyclerView.Adapter<RecyclerAdapter.ViewHolder> (){
 
     private var desc = arrayOf("This photo was taken of a Buddhist temple in the residential area of Bangkok. In Thailand there was a temple every 5 blocks but this temple had very inteicate designes" +
             " and was larger than the others we saw ", "Here is another shot of the same temple, this highlights the gold designs covering the underside of the roof. I did not capture any pictures of the inside" +
@@ -32,12 +33,24 @@ class RecyclerAdapter: RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(){
     override fun getItemCount(): Int {
         return desc.size
     }
-    inner class ViewHolder(itemView:View): RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView:View): RecyclerView.ViewHolder(itemView), View.OnClickListener{
         var itemImage: ImageView
         var itemDesc: TextView
         init {
            itemImage = itemView.findViewById(R.id.image)
             itemDesc = itemView.findViewById(R.id.imageText)
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+
+
+                listener.onItemClick(itemImage)
+
         }
     }
-}
+    interface OnItemClickListener{
+        fun onItemClick(imageView: ImageView)
+    }
+    }
+
